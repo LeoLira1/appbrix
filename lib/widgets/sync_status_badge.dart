@@ -32,7 +32,7 @@ class SyncStatusBadge extends StatelessWidget {
             break;
           case SyncStatus.erro:
             emoji = '🔴';
-            text = 'Erro sync';
+            text = 'Erro de sinc';
             color = Colors.red;
             break;
         }
