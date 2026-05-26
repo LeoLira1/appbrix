@@ -46,8 +46,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
           msg = 'E-mail inválido.';
         } else if (m.contains('email not confirmed')) {
           msg = 'Verifique sua caixa de entrada e confirme o e-mail.';
+        } else if (m.contains('unexpected_failure') || m.contains('database error')) {
+          msg = 'Erro ao criar conta. Tente novamente em instantes.';
         } else {
-          msg = 'Erro: ${e.message}';
+          msg = 'Erro ao cadastrar. Verifique os dados e tente novamente.';
         }
       } else {
         final raw = e.toString();
