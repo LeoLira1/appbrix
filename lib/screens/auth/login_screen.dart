@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../services/auth_service.dart';
 import 'register_screen.dart';
 
@@ -22,7 +23,14 @@ class _LoginScreenState extends State<LoginScreen> {
     try {
       await AuthService.instance.login(_emailCtrl.text.trim(), _senhaCtrl.text);
     } catch (e) {
-      setState(() => _erro = 'E-mail ou senha inválidos.');
+      String msg = 'E-mail ou senha inválidos.';
+      if (e is AuthException) {
+        final m = e.message.toLowerCase();
+        if (m.contains('email not confirmed')) {
+          msg = 'Confirme seu e-mail antes de entrar. Verifique sua caixa de entrada.';
+        }
+      }
+      setState(() => _erro = msg);
     } finally {
       if (mounted) setState(() => _loading = false);
     }
