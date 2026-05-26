@@ -35,17 +35,26 @@ class _RegisterScreenState extends State<RegisterScreen> {
       );
       if (mounted) Navigator.pop(context);
     } catch (e) {
-      String msg = 'Erro ao cadastrar. Verifique os dados.';
+      String msg;
       if (e is AuthException) {
         final m = e.message.toLowerCase();
         if (m.contains('already registered') || m.contains('already been registered')) {
           msg = 'Este e-mail já está cadastrado.';
-        } else if (m.contains('password should be') || m.contains('password')) {
+        } else if (m.contains('password should be') || m.contains('weak password') || m.contains('password')) {
           msg = 'A senha deve ter pelo menos 6 caracteres.';
         } else if (m.contains('unable to validate email') || m.contains('invalid email')) {
           msg = 'E-mail inválido.';
         } else if (m.contains('email not confirmed')) {
-          msg = 'Confirme seu e-mail antes de entrar.';
+          msg = 'Verifique sua caixa de entrada e confirme o e-mail.';
+        } else {
+          msg = 'Erro: ${e.message}';
+        }
+      } else {
+        final raw = e.toString();
+        if (raw.contains('EMAIL_JA_CADASTRADO')) {
+          msg = 'Este e-mail já está cadastrado.';
+        } else {
+          msg = raw.replaceFirst('Exception: ', '');
         }
       }
       setState(() => _erro = msg);

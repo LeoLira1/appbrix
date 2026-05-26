@@ -18,7 +18,11 @@ class AuthService {
       data: {'nome': nome, 'cooperativa': cooperativa},
     );
     if (response.user == null) {
-      throw Exception('Cadastro não concluído.');
+      throw Exception('Cadastro não concluído. Verifique o e-mail e tente novamente.');
+    }
+    // Empty identities means the email is already registered (email confirmation enabled)
+    if (response.user!.identities != null && response.user!.identities!.isEmpty) {
+      throw Exception('EMAIL_JA_CADASTRADO');
     }
   }
 
