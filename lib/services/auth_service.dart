@@ -12,11 +12,14 @@ class AuthService {
 
   Future<void> cadastrar(
       String nome, String email, String senha, String cooperativa) async {
-    await _client.auth.signUp(
+    final response = await _client.auth.signUp(
       email: email,
       password: senha,
       data: {'nome': nome, 'cooperativa': cooperativa},
     );
+    if (response.user == null) {
+      throw Exception('Cadastro não concluído.');
+    }
   }
 
   Future<void> logout() async {
