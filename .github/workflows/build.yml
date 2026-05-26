@@ -1,0 +1,62 @@
+name: Build and Release APK
+
+on:
+  push:
+    branches:
+      - main
+      - 'claude/**'
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.19.0'
+          channel: 'stable'
+
+      - name: Get dependencies
+        run: flutter pub get
+
+      - name: Build APK
+        run: flutter build apk --release --no-tree-shake-icons
+
+      - name: Get version
+        id: version
+        run: echo "VERSION=$(date +'%Y%m%d-%H%M%S')" >> $GITHUB_OUTPUT
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v${{ steps.version.outputs.VERSION }}
+          name: "Brix App v${{ steps.version.outputs.VERSION }}"
+          body: |
+            ## Interpretation of Brix
+
+            App de cálculo agrícola para cana-de-açúcar.
+
+            ### Download
+            Baixe o APK abaixo e instale no Android.
+
+            ### Funcionalidades
+            - Cálculo de ATR, IM, Pool, TCH e TAH
+            - Registro de amostras e talhões com GPS
+            - Gerenciamento de produtores
+            - Suporte offline-first com sincronização Supabase
+          files: build/app/outputs/flutter-apk/app-release.apk
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -1,0 +1,30 @@
+name: interpretation_of_brix
+description: App de cálculo agrícola de cana-de-açúcar com suporte offline-first.
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  google_fonts: ^6.1.0
+  sqflite: ^2.3.0
+  path: ^1.9.0
+  supabase_flutter: ^2.3.0
+  connectivity_plus: ^5.0.0
+  geolocator: ^11.0.0
+  flutter_map: ^6.0.0
+  latlong2: ^0.9.0
+  intl: ^0.19.0
+  shared_preferences: ^2.2.0
+  uuid: ^4.3.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.0
+
+flutter:
+  uses-material-design: true
