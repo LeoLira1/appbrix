@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../services/auth_service.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -34,7 +35,20 @@ class _RegisterScreenState extends State<RegisterScreen> {
       );
       if (mounted) Navigator.pop(context);
     } catch (e) {
-      setState(() => _erro = 'Erro ao cadastrar. Verifique os dados.');
+      String msg = 'Erro ao cadastrar. Verifique os dados.';
+      if (e is AuthException) {
+        final m = e.message.toLowerCase();
+        if (m.contains('already registered') || m.contains('already been registered')) {
+          msg = 'Este e-mail já está cadastrado.';
+        } else if (m.contains('password should be') || m.contains('password')) {
+          msg = 'A senha deve ter pelo menos 6 caracteres.';
+        } else if (m.contains('unable to validate email') || m.contains('invalid email')) {
+          msg = 'E-mail inválido.';
+        } else if (m.contains('email not confirmed')) {
+          msg = 'Confirme seu e-mail antes de entrar.';
+        }
+      }
+      setState(() => _erro = msg);
     } finally {
       if (mounted) setState(() => _loading = false);
     }
