@@ -8,8 +8,8 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await Supabase.initialize(
-    url: 'https://placeholder.supabase.co',
-    anonKey: 'placeholder-anon-key',
+    url: 'https://aiflerhtgvyfngnecslg.supabase.co',
+    anonKey: 'sb_publishable_rUk3BUS69bVvmmPvqlOuow_1ieHTBbU',
   );
 
   await DatabaseService.instance.init();
