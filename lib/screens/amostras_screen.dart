@@ -217,7 +217,7 @@ class _AmostrasScreenState extends State<AmostrasScreen> {
                               DataColumn(label: Text('Brix')),
                               DataColumn(label: Text('Ponta')),
                               DataColumn(label: Text('Base')),
-                              DataColumn(label: Text('Sync')),
+                              DataColumn(label: Text('Sinc')),
                               DataColumn(label: Text('')),
                             ],
                             rows: [

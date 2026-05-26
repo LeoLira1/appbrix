@@ -55,7 +55,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     child: const Icon(Icons.science, color: Color(0xFF8ac53a), size: 44),
                   ),
                   const SizedBox(height: 16),
-                  Text('Interpretation of Brix',
+                  Text('Interpretação de Brix',
                       style: GoogleFonts.outfit(
                           fontSize: 22, fontWeight: FontWeight.bold, color: const Color(0xFF003819))),
                   const SizedBox(height: 4),
